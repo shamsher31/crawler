@@ -29,3 +29,6 @@ docker-run:
 test:
 	# running tests:
 	$(GOTEST) ./... -v
+k8:
+	#generating kubernetes artifacts
+	kompose convert -o deployments

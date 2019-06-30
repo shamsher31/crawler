@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/rewrite-target: /
+  labels:
+    app: crawler
+  name: crawler
+spec:
+  backend:
+    serviceName: crawler
+    servicePort: 80
+  rules:
+  - host: crawler.test
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: crawler
+          servicePort: 80

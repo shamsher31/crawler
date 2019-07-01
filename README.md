@@ -27,7 +27,7 @@ Use [POSTMAN](https://www.getpostman.com/) to hit the API.
 localhost:8080/?url=https://www.redhat.com
 ```
 
-If you don't have postman instaaled you can try curl command.
+If you don't have postman installed you can try curl command.
 
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET localhost:8080/?url=https://www.redhat.com
@@ -43,7 +43,7 @@ For local dev first make sure [Go](https://www.golang.org/) is properly installe
  git clone https://github.com/shamsher31/crawler.git
  ```
 
-Once cloned, move into the current directy ie: `cd crawler`.
+Once cloned, move into the current directory ie: `cd crawler`.
 
 How to build
 ```make

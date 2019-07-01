@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/gocolly/colly"
@@ -81,7 +80,7 @@ func crawlURL(URL string) (*LinkInfo, error) {
 	// Search pages with links and add them to link collector
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link := e.Request.AbsoluteURL(e.Attr("href"))
-		if link != "" && strings.HasPrefix(link, URL) {
+		if link != "" {
 			info.Links = append(info.Links, link)
 		}
 	})

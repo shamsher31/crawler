@@ -5,6 +5,7 @@ import (
 	"net/url"
 )
 
+// Validate accepts URL and check if it is valid
 func Validate(URL string) error {
 	if URL == "" {
 		return errors.New("URL argument is missing")

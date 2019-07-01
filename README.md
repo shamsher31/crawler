@@ -10,19 +10,24 @@ This is a simple crawler which takes URL and returns all the links from the give
 ## Getting Started
 
 ### How to use
-If you want to try crawler, you can use crawler docker image to play around with it.
+If you want to try crawler, you can use crawler docker image to play around with it. Make sure you have [Docker](https://www.docker.com/) installed and running on your system.
 
-Pull crawler docker image
+How to pull crawler docker image
 ```docker
 docker pull shamsher31/crawler
 ```
 
-Run crawler locally
+How to run crawler locally
 ```docker
 docker run --rm -p 8080:8080 shamsher31/crawler
 ```
 
-Use POSTMAN or curl command to try it out.
+Use [POSTMAN](https://www.getpostman.com/) to hit the API.
+```
+localhost:8080/?url=https://www.redhat.com
+```
+
+If you don't have postman instaaled you can try curl command.
 
 ```
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET localhost:8080/?url=https://www.redhat.com
@@ -37,6 +42,8 @@ For local dev first make sure [Go](https://www.golang.org/) is properly installe
  ```git
  git clone https://github.com/shamsher31/crawler.git
  ```
+
+Once cloned, move into the current directy ie: `cd crawler`.
 
 How to build
 ```make

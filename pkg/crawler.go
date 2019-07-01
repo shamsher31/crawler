@@ -12,24 +12,29 @@ import (
 	"github.com/gocolly/colly"
 )
 
+// LinkInfo is a simple struct which collect links from website
 type LinkInfo struct {
 	StatusCode int
 	Links      []string
 }
 
+// HealthCheck is used to verify if the service is up and running
 func HealthCheck(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// Run executes crawler and collect links from the pages
 func Run(w http.ResponseWriter, r *http.Request) {
 
 	URL := r.URL.Query().Get("url")
 
+	// Validate given URL
 	if err := Validate(URL); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
+	// collect links
 	links, err := crawlURL(URL)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -39,6 +44,8 @@ func Run(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(links)
 }
 
+// crawlURL creates collector, visit URL and collect
+// all the links from given pages
 func crawlURL(URL string) (*LinkInfo, error) {
 
 	u, err := url.Parse(URL)
@@ -71,7 +78,7 @@ func crawlURL(URL string) (*LinkInfo, error) {
 
 	info := &LinkInfo{Links: make([]string, 0)}
 
-	// count links
+	// Search pages with links and add them to link collector
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link := e.Request.AbsoluteURL(e.Attr("href"))
 		if link != "" && strings.HasPrefix(link, URL) {
@@ -84,11 +91,13 @@ func crawlURL(URL string) (*LinkInfo, error) {
 		info.StatusCode = r.StatusCode
 	})
 
+	// collect any error during crawling
 	c.OnError(func(r *colly.Response, err error) {
 		log.Println("error:", r.StatusCode, err)
 		info.StatusCode = r.StatusCode
 	})
 
+	// Hit url with above config set
 	c.Visit(URL)
 
 	return info, nil
